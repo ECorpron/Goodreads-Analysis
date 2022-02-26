@@ -1,0 +1,338 @@
+genre,genre_category
+young adult-teen,fiction
+young adult-coming of age,fiction
+young adult,fiction
+writing-journalism,non-fiction
+writing-essays,non-fiction
+writing-books about books,non-fiction
+world war ii-holocaust,others
+world of warcraft-warcraft,others
+womens fiction-chick lit,fiction
+witchcraft,others
+westerns,others
+war-world war ii,others
+war-military fiction,fiction
+warfare-fighters,others
+war,others
+urban,others
+unfinished,others
+true story,others
+travel-travelogue,others
+travel-road trip,others
+travel,others
+thriller-mystery thriller,fiction
+thriller,fiction
+teaching,others
+suspense,others
+sports-sports,non-fiction
+sports-mountaineering,non-fiction
+sports-fitness,non-fiction
+sports-cycling,non-fiction
+sports-baseball,non-fiction
+spirituality-new age,non-fiction
+spirituality,non-fiction
+speculative fiction,fiction
+space,others
+sociology-abuse,others
+sociology,others
+soccer,others
+short stories-short story collection,others
+short stories,others
+shapeshifters-werewolves,fiction
+sexuality,others
+sequential art-manga,others
+sequential art-graphic novels,fiction
+sequential art-comics,fiction
+sequential art-bande dessinã©e,others
+self help-personal development,non-fiction
+self help,non-fiction
+science-technology,non-fiction
+science-physics,non-fiction
+science-natural history,non-fiction
+science-mathematics,non-fiction
+science-geography,non-fiction
+science-computer science,non-fiction
+science fiction-time travel,fiction
+science fiction-steampunk,fiction
+science fiction-dystopia,fiction
+science fiction-cyberpunk,fiction
+science fiction-apocalyptic,fiction
+science fiction-alternate history,fiction
+science fiction-aliens,fiction
+science fiction fantasy,fiction
+science fiction,fiction
+science,others
+school stories-boarding school,others
+romance-science fiction romance,fiction
+romance-romantic suspense,others
+romance-paranormal romance,fiction
+romance-m m romance,others
+romance-m f romance,others
+romance-lesbian romance,others
+romance-interracial romance,others
+romance-historical romance,others
+romance-erotic romance,others
+romance-contemporary romance,others
+romance,others
+roman,others
+retellings,others
+religion-wicca,non-fiction
+religion-theology,non-fiction
+religion-paganism,non-fiction
+religion-judaism,non-fiction
+religion-islam,non-fiction
+religion-faith,non-fiction
+religion-church,non-fiction
+religion-christianity,non-fiction
+religion-buddhism,non-fiction
+religion-atheism,non-fiction
+religion,non-fiction
+relationships,others
+reference,others
+realistic fiction,fiction
+psychology-counselling,non-fiction
+psychology,non-fiction
+pseudoscience-cryptozoology,non-fiction
+productivity,non-fiction
+prayer,others
+pop culture-nerd,non-fiction
+polyamorous-reverse harem,others
+politics,others
+political science-international relations,non-fiction
+poetry,others
+plays-theatre,others
+plays,others
+philosophy-theory,non-fiction
+philosophy,non-fiction
+parenting,others
+paranormal-witches,fiction
+paranormal-vampires,fiction
+paranormal-shapeshifters,fiction
+paranormal-ghosts,fiction
+paranormal-fairies,fiction
+paranormal-demons,fiction
+paranormal-angels,fiction
+own,others
+occult-tarot,others
+occult,others
+novels-light novel,fiction
+novels,fiction
+novella,others
+nonfiction,non-fiction
+new york,others
+new adult,others
+mythology-mermaids,fiction
+mystery-noir,fiction
+mystery-detective,fiction
+mystery-crime,fiction
+mystery-cozy mystery,fiction
+mystery,fiction
+music,others
+military history-civil war,others
+mental health-mental illness,others
+menage-m m f,others
+medical,others
+media tie in-star wars,fiction
+media tie in-star trek,fiction
+media tie in-doctor who,fiction
+media tie in-buffy the vampire slayer,fiction
+marriage,others
+manga-yaoi,fiction
+magical realism,others
+love inspired-love inspired suspense,others
+love,others
+literature-russian literature,others
+literature-marathi,others
+literature-jewish,others
+literature-canadian literature,others
+literature-american,others
+literature-20th century,others
+literature-19th century,others
+literature,others
+lgbt-gay,others
+lgbt,others
+leadership,non-fiction
+lds-lds fiction,fiction
+law,non-fiction
+language-writing,non-fiction
+inspirational,others
+humor-comedy,others
+humor,others
+humanities-linguistics,non-fiction
+humanities-language,non-fiction
+horror-zombies,fiction
+horror-bizarro fiction,fiction
+horror,fiction
+holiday-halloween,others
+holiday-christmas,others
+history-european history,others
+history-ancient history,others
+history-1917,others
+history,others
+historical-regency,others
+historical-medieval,others
+historical-historical fiction,fiction
+historical-georgian,others
+historical,others
+health-mental health,non-fiction
+health-medicine,non-fiction
+health,non-fiction
+gothic,others
+glbt-queer,others
+glbt-lesbian,others
+gay romance-gay for you,others
+gardening,non-fiction
+games-role playing games,others
+games-gaming,others
+games-game design,others
+games-chess,non-fiction
+football,non-fiction
+food and drink-food,non-fiction
+food and drink-cooking,non-fiction
+food and drink-cookbooks,non-fiction
+folk tales-fables,fiction
+folk tales,fiction
+fiction,fiction
+feminism,others
+fantasy-urban fantasy,fiction
+fantasy-supernatural,fiction
+fantasy-paranormal,fiction
+fantasy-mythology,fiction
+fantasy-magic,fiction
+fantasy-fairy tales,fiction
+fantasy-dragons,fiction
+fantasy,fiction
+fan fiction,fiction
+family,others
+fairy tales-fairy tale retellings,fiction
+fairies-fae,fiction
+european literature-swedish literature,others
+european literature-spanish literature,others
+european literature-scandinavian literature,others
+european literature-romanian literature,others
+european literature-portuguese literature,others
+european literature-polish literature,others
+european literature-italian literature,others
+european literature-irish literature,others
+european literature-hungarian literature,others
+european literature-german literature,others
+european literature-french literature,others
+european literature-finnish literature,others
+european literature-dutch literature,others
+european literature-danish,others
+european literature-czech literature,others
+european literature-bulgarian literature,others
+european literature-belgian,others
+european literature-albanian literature,others
+esoterica-theosophy,others
+esoterica-astrology,others
+erotica-menage,fiction
+erotica-bdsm,others
+epic,fiction
+environment-nature,non-fiction
+environment,non-fiction
+education,non-fiction
+economics-finance,non-fiction
+economics,non-fiction
+dungeons and dragons-forgotten realms,fiction
+dungeons and dragons-dragonlance,fiction
+drama,others
+disability,others
+diary-journal,others
+diary,others
+design,non-fiction
+dc comics-batman,fiction
+dark,others
+culture-film,others
+cultural-turkish,non-fiction
+cultural-spain,non-fiction
+cultural-scotland,non-fiction
+cultural-russia,non-fiction
+cultural-portugal,non-fiction
+cultural-pakistan,non-fiction
+cultural-lebanon,non-fiction
+cultural-japan,non-fiction
+cultural-italy,non-fiction
+cultural-israel,non-fiction
+cultural-ireland,non-fiction
+cultural-iran,non-fiction
+cultural-india,non-fiction
+cultural-france,non-fiction
+cultural-china,non-fiction
+cultural-canada,non-fiction
+cultural-brazil,non-fiction
+cultural-australia,non-fiction
+cultural-african american,non-fiction
+cultural-africa,non-fiction
+cultural,others
+criticism-literary criticism,others
+crime-true crime,non-fiction
+contemporary,others
+computer science-programming,non-fiction
+comics-superheroes,fiction
+comics-comic book,others
+combat-martial arts,others
+classics-modern classics,fiction
+classics-classic literature,fiction
+classics,fiction
+christianity-old testament,others
+christianity-new testament,others
+christianity-lds,others
+christianity-catholic,others
+christian-christian non fiction,non-fiction
+christian-christian living,others
+christian fiction,fiction
+christian,others
+childrens-picture books,others
+childrens-middle grade,others
+childrens-chapter books,others
+childrens-2nd grade,others
+childrens,others
+central africa-democratic republic of the ...,non-fiction
+central africa-angola,non-fiction
+category romance-mills and boon,others
+category romance-love inspired,others
+category romance-harlequin,others
+business-management,non-fiction
+business-amazon,non-fiction
+business,non-fiction
+book club,others
+biology-neuroscience,non-fiction
+biology-evolution,non-fiction
+biography-autobiography,non-fiction
+biography memoir,non-fiction
+biography,non-fiction
+aviation,non-fiction
+autobiography-memoir,non-fiction
+audiobook,others
+asian literature-turkish literature,others
+asian literature-japanese literature,others
+asian literature-indonesian literature,others
+asian literature-indian literature,others
+art-photography,others
+artificial intelligence,non-fiction
+art,others
+architecture,others
+apocalyptic-post apocalyptic,others
+anthropology,others
+anthologies-collections,others
+anthologies,others
+animals-wolves,others
+animals-horses,others
+animals-dogs,others
+animals-cats,others
+animals-birds,others
+animals,others
+amish,others
+american-southern,others
+american-african american literature,others
+adventure-survival,others
+adventure-pirates,others
+adventure,others
+adult fiction-erotica,fiction
+adult,others
+action,others
+academic-school,others
+academic-read for school,others
+academic-college,others
+academic,others
