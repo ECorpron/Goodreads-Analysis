@@ -1,0 +1,100 @@
+---
+title: "Hypothesis 2"
+author: "Anuhya B S"
+date: "2/27/2022"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**2. Authors can be classified based on years of experience or number of books published. Highly experienced authors can definitely be expected to have larger rating counts. From a publisher point of view, it would be useful to assess if publishing works of new authors (who typically have 0-3 works published) would look promising.**
+
+$$H_0:\mu_N=\mu_A$$
+__Test: Independent 2-tailed Z-test to compare mean rating count b/w New-comers and Average authors.__
+
+```{r}
+hypo2 = read.csv('./04 Intermediate Files/hypothesis2.csv')
+```
+
+```{r}
+colnames(hypo2)
+```
+```{r}
+hypo2 <- subset(hypo2, bins == 'newbie' | bins == 'experienced')
+hypo2
+```
+
+
+```{r}
+m = with(hypo2,tapply(rating_count, bins, mean))
+s = with(hypo2,tapply(rating_count, bins, sd))
+n = with(hypo2,tapply(rating_count, bins, length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = round(2*(pnorm(z)),4) 
+data.frame(z,p)
+
+
+```
+
+**Grouping Hypothesis 1 & 2: It can also make sense to view the effect of author gender with author’s work exp (clubbing Hypothesis 1 & 2) on average rating count. We are not sure how it will play; so if there is insight - we would want to share.**
+
+Comparing average rating counts of male newbies and female newbies
+```{r}
+m = with(hypo2,tapply(rating_count[bins=='newbie'], author_sex[bins=='newbie'], mean))
+s = with(hypo2,tapply(rating_count[bins=='newbie'], author_sex[bins=='newbie'], sd))
+n = with(hypo2,tapply(rating_count[bins=='newbie'], author_sex[bins=='newbie'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = round((pnorm(z)),4) 
+data.frame(z,p)
+```
+We do not have enough evidence to reject the null hypothesis.
+The average rating count for newbie female is equal to the average rating count of newbie male
+
+
+Comparing average rating counts of male experienced and female experienced
+```{r}
+m = with(hypo2,tapply(rating_count[bins=='experienced'], author_sex[bins=='experienced'], mean))
+s = with(hypo2,tapply(rating_count[bins=='experienced'], author_sex[bins=='experienced'], sd))
+n = with(hypo2,tapply(rating_count[bins=='experienced'], author_sex[bins=='experienced'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = round(2*(pnorm(z)),4) 
+data.frame(z,p)
+```
+We do not have enough evidence to reject the null hypothesis.
+The average rating count for experienced male is equal to the average rating count of experienced female
+
+
+
+Comparing average rating counts of male newbie and male experienced
+```{r}
+m = with(hypo2,tapply(rating_count[author_sex=='male'], bins[author_sex=='male'], mean))
+s = with(hypo2,tapply(rating_count[author_sex=='male'], bins[author_sex=='male'], sd))
+n = with(hypo2,tapply(rating_count[author_sex=='male'], bins[author_sex=='male'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = round((pnorm(z)),4) 
+data.frame(z,p)
+```
+
+We do not have enough evidence to reject the null hypothesis.
+The average rating count for newbie male is equal to the average rating count of experienced male.
+
+
+Comparing average rating counts of female newbie and female experienced
+```{r}
+m = with(hypo2,tapply(rating_count[author_sex=='female'], bins[author_sex=='female'], mean))
+s = with(hypo2,tapply(rating_count[author_sex=='female'], bins[author_sex=='female'], sd))
+n = with(hypo2,tapply(rating_count[author_sex=='female'], bins[author_sex=='female'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = round(2*(pnorm(z)),4) 
+data.frame(z,p)
+```
+
+We do not have enough evidence to reject the null hypothesis.
+The average rating count for newbie female is equal to the average rating count of experienced female.
