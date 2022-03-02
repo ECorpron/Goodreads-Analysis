@@ -1,5 +1,7 @@
 # Set-up ---------
 authorsInit = read.csv("./04 Intermediate Files/authors_processed.csv")
+mainDataSet = read.csv("./04 Intermediate Files/master_dataset.csv")
+#View(mainDataSet)
 #View(authorsInit)
 
 authors = subset(authorsInit, grepl('^[A-Za-z_ -]+$', author))
@@ -28,7 +30,7 @@ paste("Number of female authors after removing corrupted names:", nrow(female))
 
 ## Even though there are more female authors in this data set, men publish far more books
 ## This appears to be scewed by the author jesse russell, who the data set says has published
-## almost 19000 books. Beyond that, there are numerous entries for men and women who have
+## almost 190000 books. Beyond that, there are numerous entries for men and women who have
 ## hundreds, or even thousands, of published works. My guess is that this includes re-prints,
 ## re-issues, and the like. As such I don't think this field will give much insighte.
 
