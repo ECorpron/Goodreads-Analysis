@@ -1,6 +1,5 @@
 # Set-up --------
-options(scipen = 
-          0)
+options(scipen = 0)
 
 data = read.csv("./04 Intermediate Files/master_dataset.csv")
 #View(data)
