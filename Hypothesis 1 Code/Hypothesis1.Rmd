@@ -1,0 +1,33 @@
+---
+title: "Hypothesis 1"
+author: "Anuhya B S"
+date: "3/3/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**1. Is the average rating count different for male and female authors?**
+
+```{r}
+master_data = read.csv('master_dataset.csv')
+```
+
+$$H_0:\mu_M=\mu_F$$
+
+__Test: Independent 2-tailed Z-test to compare mean reader count among the 2 groups.__
+
+```{r}
+m = with(master_data,tapply(rating_count, author_sex, mean))
+s = with(master_data,tapply(rating_count, author_sex, sd))
+n = with(master_data,tapply(rating_count, author_sex, length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = round(2*(pnorm(z)),4) 
+data.frame(z,p)
+```
+
+Results: Since the p-vale is not less tha 0.05, we do not have sufficient evidence to reject the null hypothesis.
+ This means the average rating count of male authors is equal to average rating counts of female authors.
