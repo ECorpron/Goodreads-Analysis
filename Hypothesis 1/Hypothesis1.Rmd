@@ -29,5 +29,5 @@ p = round(2*(pnorm(z)),4)
 data.frame(z,p)
 ```
 
-Results: Since the p-vale is not less tha 0.05, we do not have sufficient evidence to reject the null hypothesis.
- This means the average rating count of male authors is equal to average rating counts of female authors.
+**Results:** Since the p-value is not less than 0.05, we do not have sufficient evidence to reject the null hypothesis.
+This means the average rating count of male authors is equal to average rating counts of female authors.

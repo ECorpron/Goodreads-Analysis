@@ -2,7 +2,9 @@
 title: "Hypothesis 2"
 author: "Anuhya B S"
 date: "2/27/2022"
-output: word_document
+output:
+  word_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -11,90 +13,278 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **2. Authors can be classified based on years of experience or number of books published. Highly experienced authors can definitely be expected to have larger rating counts. From a publisher point of view, it would be useful to assess if publishing works of new authors (who typically have 0-3 works published) would look promising.**
 
-$$H_0:\mu_N=\mu_A$$
-__Test: Independent 2-tailed Z-test to compare mean rating count b/w New-comers and Average authors.__
+The author work experience has been divided into three categories(based on log2 (author work count) distribution):\
+1. Newbie : Work count of authors less than 16\
+2. Average : Work count of authors between 16 and 256\
+3. Experienced : Work count of authors more than 256 \
+
+$$H_0:\mu_N=\mu_A=\mu_E$$
 
 ```{r}
-hypo2 = read.csv('./04 Intermediate Files/hypothesis2.csv')
+master_data = read.csv('master_dataset.csv')
 ```
 
 ```{r}
-colnames(hypo2)
-```
-```{r}
-hypo2 <- subset(hypo2, bins == 'newbie' | bins == 'experienced')
-hypo2
+colnames(master_data)
 ```
 
-
+Creating data subsets:
 ```{r}
-m = with(hypo2,tapply(rating_count, bins, mean))
-s = with(hypo2,tapply(rating_count, bins, sd))
-n = with(hypo2,tapply(rating_count, bins, length))
+new_exp <- subset(master_data, author_exp == 'newbie' | author_exp == 'experienced')
+new_exp
+new_avg <- subset(master_data, author_exp == 'newbie' | author_exp == 'average')
+new_avg
+avg_exp <- subset(master_data, author_exp == 'average' | author_exp == 'experienced')
+avg_exp
+```
+
+**2-tailed Z-test to compare mean rating count b/w New-comers and Average authors:**
+```{r}
+m = with(new_avg,tapply(rating_count, author_exp, mean))
+s = with(new_avg,tapply(rating_count, author_exp, sd))
+n = with(new_avg,tapply(rating_count, author_exp, length))
 data.frame(m,s,n)
 z = (m[1]-m[2])/sqrt(sum(s^2/n))
-p = round(2*(pnorm(z)),4) 
-data.frame(z,p)
-
-
+p = 2*(1-pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
 ```
 
-**Grouping Hypothesis 1 & 2: It can also make sense to view the effect of author gender with author’s work exp (clubbing Hypothesis 1 & 2) on average rating count. We are not sure how it will play; so if there is insight - we would want to share.**
+**Results: The z-score = 4.762963 and p-value = 1.907705e-06.**
 
-Comparing average rating counts of male newbies and female newbies
+Since the p-vale is less than 0.05, we have sufficient evidence to reject the null hypothesis.
+This means the average rating count of new comer authors is not equal to average rating counts of average work count authors.
+
+**2-tailed Z-test to compare mean rating count b/w New-comers and Experienced authors:**
+
 ```{r}
-m = with(hypo2,tapply(rating_count[bins=='newbie'], author_sex[bins=='newbie'], mean))
-s = with(hypo2,tapply(rating_count[bins=='newbie'], author_sex[bins=='newbie'], sd))
-n = with(hypo2,tapply(rating_count[bins=='newbie'], author_sex[bins=='newbie'], length))
+m = with(new_exp,tapply(rating_count, author_exp, mean))
+s = with(new_exp,tapply(rating_count, author_exp, sd))
+n = with(new_exp,tapply(rating_count, author_exp, length))
 data.frame(m,s,n)
 z = (m[1]-m[2])/sqrt(sum(s^2/n))
-p = round((pnorm(z)),4) 
-data.frame(z,p)
+p = 2*(1-pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
 ```
+**Results: The z-score = 9.482697 and p-value = *0.**
+
+Since the p-vale is less than 0.05, we have sufficient evidence to reject the null hypothesis.
+This means the average rating count of new comer authors is not equal to average rating counts of experienced authors.
+
+**2-tailed Z-test to compare mean rating count b/w Average and Experienced authors:**
+
+```{r}
+m = with(avg_exp,tapply(rating_count, author_exp, mean))
+s = with(avg_exp,tapply(rating_count, author_exp, sd))
+n = with(avg_exp,tapply(rating_count, author_exp, length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = 2*(pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+
+**Results: The z-score = -7.434607	and p-value = 1.048789e-13.**
+
+Since the p-vale is less than 0.05, we have sufficient evidence to reject the null hypothesis.
+This means the average rating count of average work count authors is not equal to average rating counts of experienced authors.
+
+**ANOVA TEST:**
+
+```{r}
+summary(aov(master_data$rating_count~as.factor(master_data$author_exp)))
+```
+
+**Pairwise test with unequal variances:**
+```{r}
+p12 = t.test(master_data$rating_count[master_data$author_exp=='newbie'],master_data$rating_count[master_data$author_exp=='average'],var.equal = F)
+p12
+p13 = t.test(master_data$rating_count[master_data$author_exp=='newbie'],master_data$rating_count[master_data$author_exp=='experienced'],var.equal = F)
+p13
+p23 = t.test(master_data$rating_count[master_data$author_exp=='average'],master_data$rating_count[master_data$author_exp=='experienced'],var.equal = F)
+p23
+```
+**Future work : Need to apply Bonferroni correction** 
+
+# Comparing the avg rating count for male and female authors having different work counts
+
+**Comparing average rating counts of male newbies and female newbies**
+```{r}
+m = with(master_data,tapply(rating_count[author_exp=='newbie'], author_sex[author_exp=='newbie'], mean))
+s = with(master_data,tapply(rating_count[author_exp=='newbie'], author_sex[author_exp=='newbie'], sd))
+n = with(master_data,tapply(rating_count[author_exp=='newbie'], author_sex[author_exp=='newbie'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = 2*(1-pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+**Results: The z-score = 1.354282	and p-value = 0.1756464.**
 We do not have enough evidence to reject the null hypothesis.
 The average rating count for newbie female is equal to the average rating count of newbie male
 
-
-Comparing average rating counts of male experienced and female experienced
+**Comparing average rating counts of male avg work count authors and female avg work count authors**
 ```{r}
-m = with(hypo2,tapply(rating_count[bins=='experienced'], author_sex[bins=='experienced'], mean))
-s = with(hypo2,tapply(rating_count[bins=='experienced'], author_sex[bins=='experienced'], sd))
-n = with(hypo2,tapply(rating_count[bins=='experienced'], author_sex[bins=='experienced'], length))
+m = with(master_data,tapply(rating_count[author_exp=='average'], author_sex[author_exp=='average'], mean))
+s = with(master_data,tapply(rating_count[author_exp=='average'], author_sex[author_exp=='average'], sd))
+n = with(master_data,tapply(rating_count[author_exp=='average'], author_sex[author_exp=='average'], length))
 data.frame(m,s,n)
 z = (m[1]-m[2])/sqrt(sum(s^2/n))
-p = round(2*(pnorm(z)),4) 
-data.frame(z,p)
+p = 2*(1-pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
 ```
+**Results: The z-score = 1.471525	and p-value = 0.1411493.**
 We do not have enough evidence to reject the null hypothesis.
-The average rating count for experienced male is equal to the average rating count of experienced female
+The average rating count for avg work count male authors is equal to the average rating count of avg work count female authors.
 
-
-
-Comparing average rating counts of male newbie and male experienced
+**Comparing average rating counts of male experienced and female experienced**
 ```{r}
-m = with(hypo2,tapply(rating_count[author_sex=='male'], bins[author_sex=='male'], mean))
-s = with(hypo2,tapply(rating_count[author_sex=='male'], bins[author_sex=='male'], sd))
-n = with(hypo2,tapply(rating_count[author_sex=='male'], bins[author_sex=='male'], length))
+m = with(master_data,tapply(rating_count[author_exp=='experienced'], author_sex[author_exp=='experienced'], mean))
+s = with(master_data,tapply(rating_count[author_exp=='experienced'], author_sex[author_exp=='experienced'], sd))
+n = with(master_data,tapply(rating_count[author_exp=='experienced'], author_sex[author_exp=='experienced'], length))
 data.frame(m,s,n)
 z = (m[1]-m[2])/sqrt(sum(s^2/n))
-p = round((pnorm(z)),4) 
-data.frame(z,p)
+p = 2*(pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+**Results: The z-score = -0.7185741		and p-value = 0.4724034.**
+We do not have enough evidence to reject the null hypothesis.
+The average rating count for experienced male is equal to the average rating count of experienced female.
+
+Pairwise T-test with unequal variances:
+```{r}
+p12 = t.test(master_data$rating_count[master_data$author_exp=='newbie' & master_data$author_sex=='male' ], master_data$rating_count[master_data$author_exp=='newbie'  & master_data$author_sex=='female' ], var.equal = F)
+p12
+p13 = t.test(master_data$rating_count[master_data$author_exp=='average' & master_data$author_sex=='male' ], master_data$rating_count[master_data$author_exp=='average'  & master_data$author_sex=='female' ], var.equal = F)
+p13
+p23 = t.test(master_data$rating_count[master_data$author_exp=='experienced' & master_data$author_sex=='male' ], master_data$rating_count[master_data$author_exp=='experienced'  & master_data$author_sex=='female' ], var.equal = F)
+p23
 ```
 
-We do not have enough evidence to reject the null hypothesis.
-The average rating count for newbie male is equal to the average rating count of experienced male.
-
-
-Comparing average rating counts of female newbie and female experienced
+**Comparing average rating counts of male newbie and male avg work count**
 ```{r}
-m = with(hypo2,tapply(rating_count[author_sex=='female'], bins[author_sex=='female'], mean))
-s = with(hypo2,tapply(rating_count[author_sex=='female'], bins[author_sex=='female'], sd))
-n = with(hypo2,tapply(rating_count[author_sex=='female'], bins[author_sex=='female'], length))
+m = with(new_avg,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], mean))
+s = with(new_avg,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], sd))
+n = with(new_avg,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], length))
 data.frame(m,s,n)
 z = (m[1]-m[2])/sqrt(sum(s^2/n))
-p = round(2*(pnorm(z)),4) 
-data.frame(z,p)
+p = 2*(1-pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+**Results: The z-score = 4.395607	and p-value = 0.**
+We have sufficient evidence to reject the null hypothesis.
+The average rating count for newbie male authors is not equal to the average rating count of avg work count male authors.
+
+**Comparing average rating counts of male newbie and male experienced author**
+
+```{r}
+m = with(new_exp,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], mean))
+s = with(new_exp,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], sd))
+n = with(new_exp,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = 2*(1-pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+**Results: The z-score = 9.446552	and p-value = 0.**
+We have sufficient evidence to reject the null hypothesis.
+The average rating count for newbie male authors is not equal to the average rating count of experienced male authors.
+
+**Comparing average rating counts of male experienced and male avg work count**
+
+```{r}
+m = with(avg_exp,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], mean))
+s = with(avg_exp,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], sd))
+n = with(avg_exp,tapply(rating_count[author_sex=='male'], author_exp[author_sex=='male'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = 2*(pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+**Results: The z-score = -7.555948	and p-value = 0.**
+We have sufficient evidence to reject the null hypothesis.
+The average rating count for experienced male authors is not equal to the average rating count of avg work count male authors.
+
+ANOVA Test:
+```{r}
+summary(aov(master_data$rating_count[master_data$author_sex=='male']~as.factor(master_data$author_exp[master_data$author_sex=='male'])))
 ```
 
-We do not have enough evidence to reject the null hypothesis.
-The average rating count for newbie female is equal to the average rating count of experienced female.
+Pairwise T-test with unequal variances:
+```{r}
+p12 = t.test(master_data$rating_count[master_data$author_exp=='newbie' & master_data$author_sex=='male'], master_data$rating_count[master_data$author_exp=='average' & master_data$author_sex=='male'],var.equal = F)
+p12
+p13 = t.test(master_data$rating_count[master_data$author_exp=='newbie' & master_data$author_sex=='male'], master_data$rating_count[master_data$author_exp=='experienced' & master_data$author_sex=='male'],var.equal = F)
+p13
+p23 = t.test(master_data$rating_count[master_data$author_exp=='average' & master_data$author_sex=='male'], master_data$rating_count[master_data$author_exp=='experienced' & master_data$author_sex=='male'],var.equal = F)
+p23
+```
+
+**Comparing average rating counts of female newbie and female avg work count**
+```{r}
+m = with(new_avg,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], mean))
+s = with(new_avg,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], sd))
+n = with(new_avg,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = 2*(1-pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+**Results: The z-score = 3.224229	and p-value = 0.0013**
+We have sufficient evidence to reject the null hypothesis.
+The average rating count for newbie female authors is not equal to the average rating count of avg work count female authors.
+
+**Comparing average rating counts of female experienced and female newbie authors**
+
+```{r}
+m = with(new_exp,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], mean))
+s = with(new_exp,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], sd))
+n = with(new_exp,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = 2*(1-pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+**Results: The z-score = 3.637264	and p-value = 0.000275549**
+We have sufficient evidence to reject the null hypothesis.
+The average rating count for newbie female authors is not equal to the average rating count of experienced female authors.
+
+**Comparing average rating counts of female experienced and female avg work count**
+
+```{r}
+m = with(avg_exp,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], mean))
+s = with(avg_exp,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], sd))
+n = with(avg_exp,tapply(rating_count[author_sex=='female'], author_exp[author_sex=='female'], length))
+data.frame(m,s,n)
+z = (m[1]-m[2])/sqrt(sum(s^2/n))
+p = 2*(pnorm(z))
+round_p = round(p,4)
+data.frame(z,p,round_p)
+```
+**Results: The z-score = -2.583666	and p-value = 0.0098**
+We have sufficient evidence to reject the null hypothesis.
+The average rating count for experienced female authors is not equal to the average rating count of avg work count female authors.
+
+ANOVA Test:
+
+```{r}
+summary(aov(master_data$rating_count[master_data$author_sex=='female']~as.factor(master_data$author_exp[master_data$author_sex=='female'])))
+```
+
+Pairwise T-test with unequal variances:
+```{r}
+p12 = t.test(master_data$rating_count[master_data$author_exp=='newbie' & master_data$author_sex=='female'], master_data$rating_count[master_data$author_exp=='average' & master_data$author_sex=='female'],var.equal = F)
+p12
+p13 = t.test(master_data$rating_count[master_data$author_exp=='newbie' & master_data$author_sex=='female'], master_data$rating_count[master_data$author_exp=='experienced' & master_data$author_sex=='female'],var.equal = F)
+p13
+p23 = t.test(master_data$rating_count[master_data$author_exp=='average' & master_data$author_sex=='female'], master_data$rating_count[master_data$author_exp=='experienced' & master_data$author_sex=='female'],var.equal = F)
+p23
+```
