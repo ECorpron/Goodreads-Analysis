@@ -1,5 +1,10 @@
 # Goodreads-Analysis
 
+### Data Sources:
+- [Goodreads Books Data](https://www.kaggle.com/austinreese/goodreads-books)
+- [Goodreads Authors Data](https://www.kaggle.com/choobani/goodread-authors)
+
+### Repo Updates
 For the python notebooks in '03 Source codes', please use the datasets present in '01 Datasets'.
 
 Update 26th Feb: Refer source code 03 master data preparation. The master dataset for statistical analysis is present in Intermediate Files folder. Changes made:
